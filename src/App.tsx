@@ -6,29 +6,14 @@ import {
   ThemeProvider,
   appkitTranslations,
 } from "@dxos/react-appkit";
-import {
-  ClientProvider,
-  useIdentity,
-  useQuery,
-  useSpaces,
-} from "@dxos/react-client";
+import { ClientProvider } from "@dxos/react-client";
 import { Config, Dynamics, Local, Defaults } from "@dxos/config";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { ErrorBoundary } from "./ErrorBoundary";
+import { Counter } from "./Counter";
 
 // Dynamics allows configuration to be supplied by the hosting KUBE.
 const config = async () => new Config(await Dynamics(), Local(), Defaults());
-
-const Component = () => {
-  // Get the user to log in before a space can be obtained.
-  const identity = useIdentity({ login: true });
-  // Get the first available space, created with the identity.
-  const [space] = useSpaces();
-  // Grab everything in the space.
-  const objects = useQuery(space, {});
-  // Show the id of the first object returned.
-  return <>{objects[0]?.id}</>;
-};
 
 export const App = () => {
   const serviceWorker = useRegisterSW();
@@ -42,7 +27,7 @@ export const App = () => {
         fallback={({ error }) => <ResetDialog error={error} config={config} />}
       >
         <ClientProvider config={config} fallback={GenericFallback}>
-          <Component />
+          <Counter />
           <ServiceWorkerToastContainer {...serviceWorker} />
         </ClientProvider>
       </ErrorBoundary>
