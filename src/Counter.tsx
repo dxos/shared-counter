@@ -1,22 +1,24 @@
 import { Expando, useIdentity, useQuery, useSpaces } from "@dxos/react-client";
-import React from "react";
+import React, { useEffect } from "react";
 
 export const Counter = () => {
   const identity = useIdentity({ login: true });
   const [space] = useSpaces();
   const [counter] = useQuery(space, { type: "counter" });
 
-  if (space && !counter) {
-    const c = new Expando({ type: "counter", values: [] });
-    space.db.add(c);
-  }
+  useEffect(() => {
+    if (space && !counter) {
+      const c = new Expando({ type: "counter", values: [] });
+      space.db.add(c);
+    }
+  }, [space, counter]);
 
   return (
     <div>
       {counter ? (
         <div className="text-center">
           <button
-            className="border bg-white dark:bg:black py-2 px-4 rounded"
+            className="border bg-white dark:bg:black py-2 px-4 my-2 rounded hover:bg-gray-100"
             onClick={() => {
               counter.values.push(1);
             }}
