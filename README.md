@@ -1,3 +1,7 @@
+# ⚠️ ARCHIVED ⚠️
+
+Follow the [React Tutorial](https://docs.dxos.org/guide/tutorial.html) to build a similar application.
+
 # DXOS Shared Counter
 
 This is a simple shared counter React app that uses DXOS to share state among peers.
